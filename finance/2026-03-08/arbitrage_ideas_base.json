@@ -1,0 +1,67 @@
+[
+  {
+    "idea_id": "BASE_USDC_ARB_20260308_001",
+    "timestamp": "2026-03-08T20:09:00Z",
+    "chain": "base",
+    "strategy_type": "arbitrage",
+    "assets_involved": ["USDC"],
+    "protocols_involved": ["Uniswap", "Curve"],
+    "summary": "[SYNTHETIC DATA] USDC pricing dislocation between Uniswap v3 and Curve StableSwap on Base. Synthetic observation: 18 bps edge detected in Curve->Uniswap direction with reasonable liquidity.",
+    "thesis": "[SYNTHETIC] Curve Finance's StableSwap AMM for USDC-USDT pair is synthetically showing 18 bps worse price than Uniswap v3 for 50k USDC swap. This represents a temporary but executable dislocation if slippage and gas remain within synthetic estimates. Base network gas costs are low enough to make this viable for conservative capital.",
+    "expected_edge": {
+      "type": "bps",
+      "value": 12
+    },
+    "estimated_costs": {
+      "gas_usd": 0.85,
+      "fees_usd": 2.5,
+      "slippage_bps": 3
+    },
+    "liquidity_notes": "[SYNTHETIC] Assumed ~$500k liquidity in Uniswap USDC/USDT 0.01% fee tier and $800k in Curve StableSwap pool. Synthetic routing: Buy 50k USDC on Curve (via USDT pair), swap back on Uniswap.",
+    "time_sensitivity": "medium",
+    "confidence_score": 0.35,
+    "risk_score": 0.42,
+    "key_risks": [
+      "Synthetic data—real prices may differ significantly",
+      "Front-running risk on detection",
+      "Slippage exceeds synthetic estimate during execution",
+      "Pool rebalancing during execution window",
+      "MEV extraction on Base reduces effective edge"
+    ],
+    "recommended_next_step": "reject",
+    "requires_human_review": false
+  },
+  {
+    "idea_id": "BASE_ETH_ROUTE_20260308_002",
+    "timestamp": "2026-03-08T20:09:00Z",
+    "chain": "base",
+    "strategy_type": "arbitrage",
+    "assets_involved": ["ETH", "USDC"],
+    "protocols_involved": ["Uniswap", "Aerodrome"],
+    "summary": "[SYNTHETIC DATA] Suboptimal routing inefficiency detected: WETH→USDC conversion via Aerodrome synthetically 22 bps cheaper than direct Uniswap route. Synthetic scenario assumes liquidity imbalance.",
+    "thesis": "[SYNTHETIC] Aerodrome's concentrated liquidity positions on Base are synthetically creating temporary price gaps vs. Uniswap for ETH→USDC swaps. A 10 ETH swap shows 22 bps worse execution on Uniswap v3 vs. routing through Aerodrome's AERO-boosted pool (with staked incentives). Conservative edge after costs: ~14 bps.",
+    "expected_edge": {
+      "type": "bps",
+      "value": 14
+    },
+    "estimated_costs": {
+      "gas_usd": 1.20,
+      "fees_usd": 3.2,
+      "slippage_bps": 5
+    },
+    "liquidity_notes": "[SYNTHETIC] Assumed ~2M TVL in Aerodrome WETH/USDC pool, 3.5M in Uniswap v3. Synthetic conditions: Aerodrome pool temporarily overweight USDC due to synthetic yield farming skew. Multi-step route: WETH→AERO→USDC or direct through concentrated ticks.",
+    "time_sensitivity": "medium",
+    "confidence_score": 0.38,
+    "risk_score": 0.48,
+    "key_risks": [
+      "Entirely synthetic market conditions",
+      "Aerodrome incentives subject to rapid change",
+      "Bridge risk if cross-DEX route requires additional hops",
+      "Gas spikes eliminate thin edge",
+      "Liquidity fragmentation risk across multiple protocols",
+      "AERO token volatility if swapped"
+    ],
+    "recommended_next_step": "monitor",
+    "requires_human_review": true
+  }
+]

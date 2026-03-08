@@ -1,0 +1,99 @@
+[
+  {
+    "idea_id": "BASE_USDC_ROTATION_20260308",
+    "timestamp": "2026-03-08T20:09:00Z",
+    "chain": "base",
+    "strategy_type": "yield_rotation",
+    "assets_involved": ["USDC"],
+    "protocols_involved": ["Aave", "Compound"],
+    "summary": "[SYNTHETIC DATA] Rotate USDC from Aave (estimated 4.8% APY) to Compound (estimated 5.2% APY) for 40 bps yield improvement.",
+    "thesis": "Compound's USDC supply rates have improved due to recent increased demand for stablecoin liquidity. Aave rates remain stable but lower. Assumes both protocols remain solvent and rates don't collapse within execution window. Execution cost is modest on Base L2.",
+    "expected_edge": {
+      "type": "apy",
+      "value": 0.004
+    },
+    "estimated_costs": {
+      "gas_usd": 1.20,
+      "fees_usd": 0,
+      "slippage_bps": 0
+    },
+    "liquidity_notes": "[SYNTHETIC] Estimated $50M+ liquidity at Compound USDC market. Execution size limit: $2-5M without material slippage. 40 bps improvement assumes rates hold for 3+ months.",
+    "time_sensitivity": "low",
+    "confidence_score": 0.52,
+    "risk_score": 0.25,
+    "key_risks": [
+      "Compound supply rates could compress if new deposits rush in",
+      "Aave rates could improve unexpectedly",
+      "Smart contract risk on both protocols (though both well-audited)",
+      "Synthetic rate data — actual rates may differ"
+    ],
+    "recommended_next_step": "monitor",
+    "requires_human_review": true,
+    "data_source": "SYNTHETIC — estimated rates based on typical Base L2 DeFi APY ranges"
+  },
+  {
+    "idea_id": "BASE_ETH_STAKE_20260308",
+    "timestamp": "2026-03-08T20:09:00Z",
+    "chain": "base",
+    "strategy_type": "liquidity_provision",
+    "assets_involved": ["ETH"],
+    "protocols_involved": ["Lido", "Rocketpool"],
+    "summary": "[SYNTHETIC DATA] Stake ETH via Lido (estimated 3.1% APY) or Rocketpool (estimated 3.3% APY) for baseline staking yield on Base.",
+    "thesis": "Both protocols offer liquid staking on Base with minimal friction. Rocketpool yields slightly higher due to operator premiums but carries node operator risk. Assumes Ethereum network remains healthy and staking participation doesn't spike dramatically.",
+    "expected_edge": {
+      "type": "apy",
+      "value": 0.031
+    },
+    "estimated_costs": {
+      "gas_usd": 2.50,
+      "fees_usd": 0,
+      "slippage_bps": 0
+    },
+    "liquidity_notes": "[SYNTHETIC] Lido: $200M+ TVL on Base, excellent liquidity for exits. Rocketpool: $40M TVL, lower liquidity but still functional. Both have deep stETH/rETH swap pairs for exit if needed. Assumes staking pools remain open.",
+    "time_sensitivity": "low",
+    "confidence_score": 0.48,
+    "risk_score": 0.35,
+    "key_risks": [
+      "Ethereum staking yield could decline if validators increase dramatically",
+      "Liquid staking token peg risk (though minimal for Lido/Rocketpool)",
+      "Synthetic APY estimates — actual yields fluctuate daily",
+      "Regulatory risk around staking in some jurisdictions"
+    ],
+    "recommended_next_step": "monitor",
+    "requires_human_review": true,
+    "data_source": "SYNTHETIC — estimated Ethereum staking APY + protocol premiums, not real-time data"
+  },
+  {
+    "idea_id": "BASE_STABLECOIN_LP_20260308",
+    "timestamp": "2026-03-08T20:09:00Z",
+    "chain": "base",
+    "strategy_type": "liquidity_provision",
+    "assets_involved": ["USDC", "USDT"],
+    "protocols_involved": ["Aerodrome"],
+    "summary": "[SYNTHETIC DATA] Provide USDC/USDT liquidity on Aerodrome stable pool (estimated 6.2% base APY + 1.8% AERO incentives = 8.0% total).",
+    "thesis": "USDC/USDT is a natural pair with low slippage and stable value. Aerodrome's incentive program boosts yields. Assumes: AERO token maintains value, swap volume remains consistent, and both stablecoins stay pegged. Low impermanent loss risk due to correlated assets.",
+    "expected_edge": {
+      "type": "apy",
+      "value": 0.08
+    },
+    "estimated_costs": {
+      "gas_usd": 3.50,
+      "fees_usd": 0,
+      "slippage_bps": 1
+    },
+    "liquidity_notes": "[SYNTHETIC] Aerodrome USDC/USDT pool: estimated $80M TVL. Can handle $1-3M deposits without material slippage. Exit liquidity is strong. 8% APY assumes continued AERO emissions; if cut, yield drops to ~6.2%.",
+    "time_sensitivity": "medium",
+    "confidence_score": 0.55,
+    "risk_score": 0.40,
+    "key_risks": [
+      "AERO incentive emissions could decline or stop entirely",
+      "USDC/USDT peg break (rare but possible in extreme scenarios)",
+      "Aerodrome protocol changes could affect pool mechanics",
+      "Synthetic yield data — actual LP APY varies daily with volume and incentives",
+      "Stablecoin divergence risk if one depegs significantly"
+    ],
+    "recommended_next_step": "monitor",
+    "requires_human_review": true,
+    "data_source": "SYNTHETIC — estimated pool APY, AERO incentive rates, and TVL based on typical Base L2 conditions"
+  }
+]
